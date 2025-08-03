@@ -30,7 +30,7 @@ export class PropertyManager {
    */
   public getPropertiesWithInvalidPostcodes(): string[] {
 	function isValidUKPostcode(postcode: string): boolean {
-		const regex = /^([A-Za-z][A-Ha-hJ-Yj-y]?[0-9][A-Za-z0-9]? ?[0-9][A-Za-z]{2}|[Gg][Ii][Rr] ?0[Aa]{2})$/;
+		const regex = /^([A-Za-z][A-Ha-hJ-Yj-y]?[0-9][A-Za-z0-9]? ?[0-9][A-Za-z]{2}|[Gg][Ii][Rr] ?0[Aa]{2})$/;  // Government recommended one found from this stackoverflow post (https://stackoverflow.com/questions/164979/regex-for-matching-uk-postcodes)
 		return regex.test(postcode.trim());
 	}
     return this.properties
