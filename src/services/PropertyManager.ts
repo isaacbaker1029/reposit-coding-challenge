@@ -13,4 +13,16 @@ export class PropertyManager {
     return totalRent / regionalProperties.length;
   }
   
+    /**
+   * REQUIREMENT 2: Calculate rent per tenant for a property.
+   */
+  public calculateRentPerTenant(propertyId: string, currency: Currency = 'pounds'): number {
+    const property = this.properties.find((p) => p.propertyId === propertyId);
+    if (!property) throw new Error(`Property with ID "${propertyId}" not found.`);
+    const propertyTenants = this.tenants.filter((t) => t.propertyId === propertyId);
+    if (propertyTenants.length === 0) throw new Error(`Property with ID "${propertyId}" has no tenants.`);
+    const rentPerTenantInPounds = property.monthlyRent / propertyTenants.length;
+    return currency === 'pence' ? rentPerTenantInPounds * 100 : rentPerTenantInPounds;
+  }
+  
 }
