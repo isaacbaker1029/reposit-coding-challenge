@@ -63,5 +63,27 @@ describe('PropertyManager', () => {
 			expect(service.getPropertiesWithInvalidPostcodes()).toEqual(['P3']);
 		});
 	});
+	
+	describe('getPropertyStatus', () => {
+		it('should return PROPERTY_VACANT for a property with no tenants', () => {
+			expect(service.getPropertyStatus('P5')).toBe('PROPERTY_VACANT');
+		});
+		
+		it('should return PROPERTY_OVERDUE if tenancy end date is in the past', () => {
+			expect(service.getPropertyStatus('P4')).toBe('PROPERTY_OVERDUE');
+		});
+		
+		it('should return PARTIALLY_VACANT for a property below capacity', () => {
+			expect(service.getPropertyStatus('P2')).toBe('PARTIALLY_VACANT');
+		});
+		
+		it('should return PROPERTY_ACTIVE for a property at full capacity', () => {
+			expect(service.getPropertyStatus('P1')).toBe('PROPERTY_ACTIVE');
+		});
+		
+		it('should throw an error if the property ID does not exist', () => {
+			expect(() => service.getPropertyStatus('P999')).toThrow('Property with ID "P999" not found.');
+		});
+	});
 
 });

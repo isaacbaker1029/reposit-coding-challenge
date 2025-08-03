@@ -38,4 +38,18 @@ export class PropertyManager {
     .map((p) => p.propertyId);
   }
   
+    /**
+   * REQUIREMENT 4: Get the status of a property.
+   */
+  public getPropertyStatus(propertyId: string): PropertyStatus {
+    const property = this.properties.find((p) => p.propertyId === propertyId);
+    if (!property) throw new Error(`Property with ID "${propertyId}" not found.`);
+    const propertyTenants = this.tenants.filter((t) => t.propertyId === propertyId);
+
+    if (propertyTenants.length === 0) return 'PROPERTY_VACANT';
+    if (property.tenancyEndDate < new Date()) return 'PROPERTY_OVERDUE';
+    if (propertyTenants.length < property.capacity) return 'PARTIALLY_VACANT';
+    return 'PROPERTY_ACTIVE';
+  }
+  
 }
