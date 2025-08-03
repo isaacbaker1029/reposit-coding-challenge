@@ -28,33 +28,39 @@ describe('PropertyManager', () => {
 
 	describe('calculateAverageRentByRegion', () => {
 		it('should calculate the correct average rent for a region', () => {
-		  expect(service.calculateAverageRentByRegion('London')).toBe(1950); // (2000 + 2500 + 1500 + 1800) / 4 = 1950
+			expect(service.calculateAverageRentByRegion('London')).toBe(1950); // (2000 + 2500 + 1500 + 1800) / 4 = 1950
 		});
 
 		it('should return 0 for a region with no properties', () => {
-		  expect(service.calculateAverageRentByRegion('Bristol')).toBe(0);
+			expect(service.calculateAverageRentByRegion('Bristol')).toBe(0);
 		});
 
 		it('should handle case insensitivity in region names', () => {
-		  expect(service.calculateAverageRentByRegion('london')).toBe(1950);
+			expect(service.calculateAverageRentByRegion('london')).toBe(1950);
 		});
 	});
 
 	describe('calculateRentPerTenant', () => {
 		it('should calculate rent per tenant in pounds by default', () => {
-		expect(service.calculateRentPerTenant('P1')).toBe(1000);
+			expect(service.calculateRentPerTenant('P1')).toBe(1000);
 		});
 
 		it('should calculate rent per tenant in pence when specified', () => {
-		expect(service.calculateRentPerTenant('P1', 'pence')).toBe(100000);
+			expect(service.calculateRentPerTenant('P1', 'pence')).toBe(100000);
 		});
 
 		it('should throw an error if property has no tenants', () => {
-		expect(() => service.calculateRentPerTenant('P5')).toThrow('Property with ID "P5" has no tenants.');
+			expect(() => service.calculateRentPerTenant('P5')).toThrow('Property with ID "P5" has no tenants.');
 		});
 
 		it('should throw an error if property does not exist', () => {
-		expect(() => service.calculateRentPerTenant('P999')).toThrow('Property with ID "P999" not found.');
+			expect(() => service.calculateRentPerTenant('P999')).toThrow('Property with ID "P999" not found.');
+		});
+	});
+	
+	describe('getPropertiesWithInvalidPostcodes', () => {
+		it('should return a list of property IDs with invalid postcodes', () => {
+			expect(service.getPropertiesWithInvalidPostcodes()).toEqual(['P3']);
 		});
 	});
 

@@ -25,4 +25,17 @@ export class PropertyManager {
     return currency === 'pence' ? rentPerTenantInPounds * 100 : rentPerTenantInPounds;
   }
   
+    /**
+   * REQUIREMENT 3: Validate postcodes of all properties.
+   */
+  public getPropertiesWithInvalidPostcodes(): string[] {
+	function isValidUKPostcode(postcode: string): boolean {
+		const regex = /^([A-Za-z][A-Ha-hJ-Yj-y]?[0-9][A-Za-z0-9]? ?[0-9][A-Za-z]{2}|[Gg][Ii][Rr] ?0[Aa]{2})$/;
+		return regex.test(postcode.trim());
+	}
+    return this.properties
+    .filter((p) => !isValidUKPostcode(p.postcode))
+    .map((p) => p.propertyId);
+  }
+  
 }
